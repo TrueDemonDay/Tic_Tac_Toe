@@ -32,7 +32,7 @@ void DumbTurn(int A[]) //just random turn
     }
 }
 
-bool CheckVictory(int A[])
+bool CheckVictory(int A[]) //Check all combination to win
 {
     if ((A[0] == A[1]) && (A[0] == A[2]) && !(A[0] == 0)) 
         return 1;
@@ -56,7 +56,7 @@ bool CheckVictory(int A[])
     return 0;
 }
 
-bool IfItDraw(int A[])
+bool IfItDraw(int A[]) //Check can make turn?
 {
     int i = 0;
     while (i<9)
@@ -88,7 +88,7 @@ void PrintTable(int A[])
     }
 }
 
-void ClearTable(int A[])
+void ClearTable(int A[]) //In new game clear array 
 {
     int i = 0;
     while (i < 9)
@@ -98,12 +98,12 @@ void ClearTable(int A[])
     }
 }
 
-bool ChooseBlock(int A[],int i, int j, int g)
-{
-    if ((A[i]==(3-g)) || (A[j]==(3-g)))
-    {
-        return false;
-    }
+bool ChooseBlock(int A[],int i, int j, int g)   //Used in SmartTurn for win move, or don't let player win
+{                                               //Checking for a combination
+    if ((A[i]==(3-g)) || (A[j]==(3-g)))         //if g=2 then check can AI win? 
+    {                                           //if in row not player simvol, check second AI simvol in row
+        return false;                           //if all true, place AI simvol in free combo row
+    }                                           //if g=1 then check can player win?
     if (A[i] == g)
         {
             A[j] = 2;
@@ -117,9 +117,9 @@ bool ChooseBlock(int A[],int i, int j, int g)
     return false;
 }
 
-void SmartTurn(int A[], int g)
-{
-    if (A[0] == g) 
+void SmartTurn(int A[], int g) //Check all combo to win(AI and Player)
+{               
+    if (A[0] == g)             //---ToDo:Delete all duplicates---
         {
             if (ChooseBlock(A, 1, 2, g))
                 return;
@@ -202,9 +202,9 @@ void SmartTurn(int A[], int g)
             if (ChooseBlock(A, 0, 4, g))
                 return;
         }
-    if (g == 1)
+    if (g == 1)                         //If can't make win move or player can't make win move, then 
         DumbTurn(A);
-    else
+    else                                //If can't make win move, then check can player make win move
         SmartTurn(A, g - 1);
 }
 
@@ -224,11 +224,12 @@ int ChooseDiff()
 
 void ThinkTurn(int A[])
 {
-    
+    //---ToDo---
+    //if can't do ThinkTurn, do
     SmartTurn(A, 2);
 }
 
 void RemeberGame(int A[])
 {
-
+    //ToDo
 }
